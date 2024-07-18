@@ -9,7 +9,9 @@ BugReports: https://github.com/gambalab/gficf
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.2
-Depends: R (>= 3.6), RcppML
+Depends: 
+    R (>= 3.6),
+    RcppML (>= 0.3.7)
 LinkingTo: RcppArmadillo, Rcpp (>= 0.11.0), RcppGSL, RcppProgress, RcppParallel, RcppEigen
 biocViews:
 Imports: 
@@ -41,6 +43,4 @@ Imports:
     ensembldb,
     harmony,
     BiocParallel
-Remotes:
-    github::zdebruine/RcppML
 SystemRequirements: GNU make
