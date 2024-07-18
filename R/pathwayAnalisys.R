@@ -191,9 +191,9 @@ runScGSEA <- function(data,geneID,species,category,subcategory=NULL,pathway.list
       if (!is.null(data$pca) && data$pca$type == "NMF"){
         if (data$dimPCA<nmf.k || data$pca$use.odgenes) {
           tsmessage("... Performing NMF",verbose=verbose)
-          tmp = RcppML::nmf(data = data$gficf,k=nmf.k)
-          data$scgsea$nmf.w <- Matrix::Matrix(data = tmp$w,sparse = T)
-          data$scgsea$nmf.h <- t(Matrix::Matrix(data = tmp$h,sparse = T))
+          tmp = RcppML::nmf(data$gficf,k=nmf.k)
+          data$scgsea$nmf.w <- Matrix::Matrix(data = tmp$w,sparse = T, dimnames = list(rownames(data$gficf), NULL))
+          data$scgsea$nmf.h <- t(Matrix::Matrix(data = tmp$h,sparse = T, dimnames = list(NULL, colnames(data$gficf))))
           rm(tmp);gc()
         } else {
           tsmessage(paste0("Found NMF reduction with k greaten or equal to ", nmf.k),verbose=T)
@@ -207,14 +207,14 @@ runScGSEA <- function(data,geneID,species,category,subcategory=NULL,pathway.list
         tsmessage("... Performing NMF",verbose=verbose)
         tmp = RcppML::nmf(data$gficf,k=nmf.k)
         data$scgsea$nmf.w <- Matrix::Matrix(data = tmp$w,sparse = T, dimnames = list(rownames(data$gficf), NULL))
-        data$scgsea$nmf.h <- t(Matrix::Matrix(data = tmp$h,sparse = T, dimnames = list(NULL, colnames(data$gficf)))))
+        data$scgsea$nmf.h <- t(Matrix::Matrix(data = tmp$h,sparse = T, dimnames = list(NULL, colnames(data$gficf))))
         rm(tmp);gc()
       }
     } else {
       tsmessage("... Performing NMF",verbose=verbose)
       tmp = RcppML::nmf(log1p(data$rawCounts),k=nmf.k)
-      data$scgsea$nmf.w <- Matrix::Matrix(data = tmp$w,sparse = T)
-      data$scgsea$nmf.h <- t(Matrix::Matrix(data = tmp$h,sparse = T))
+      data$scgsea$nmf.w <- Matrix::Matrix(data = tmp$w,sparse = T, dimnames = list(rownames(data$gficf), NULL))
+      data$scgsea$nmf.h <- t(Matrix::Matrix(data = tmp$h,sparse = T, dimnames = list(NULL, colnames(data$gficf))))
       rm(tmp);gc()
     }
   } else {
